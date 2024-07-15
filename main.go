@@ -8,8 +8,8 @@ import (
 )
 
 func usage() {
-	fmt.Fprintf(os.Stderr, `usage: web build\n`)
-	fmt.Fprintf(os.Stderr, `       web serve\n`)
+	fmt.Fprintf(os.Stderr, "usage: web build\n")
+	fmt.Fprintf(os.Stderr, "       web serve\n")
 	os.Exit(2)
 }
 
