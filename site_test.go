@@ -16,13 +16,13 @@ func TestBuild(t *testing.T) {
 	ctx := context.Background()
 
 	initialConfigurer := ConfigureFunc(func(ctx context.Context, s *Site) error {
-		s.Render("index.html", RenderFunc(func(ctx context.Context, w io.Writer) error {
+		s.RenderFunc("index.html", func(ctx context.Context, w io.Writer) error {
 			fmt.Fprintf(w, "<!doctype html>\n")
 			fmt.Fprintf(w, "<img src=\"%s\">\n", Asset(ctx, "image.png"))
 			return nil
-		}))
+		})
 		// Follow-up configurer that creates the image.png asset
-		s.Configure(ConfigureFunc(func(ctx context.Context, s *Site) error {
+		s.ConfigureFunc(func(ctx context.Context, s *Site) error {
 			if err := os.Mkdir("assets", 0755); err != nil {
 				return err
 			}
@@ -40,7 +40,7 @@ func TestBuild(t *testing.T) {
 				return nil
 			}))
 			return nil
-		}))
+		})
 		return nil
 	})
 

@@ -70,8 +70,16 @@ func (s *Site) Configure(configurer Configurer) {
 	s.configurers = append(s.configurers, configurer)
 }
 
+func (s *Site) ConfigureFunc(configurer func(ctx context.Context, s *Site) error) {
+	s.Configure(ConfigureFunc(configurer))
+}
+
 func (s *Site) Render(path string, renderer Renderer) {
 	s.renderers[path] = renderer
+}
+
+func (s *Site) RenderFunc(path string, renderer func(ctx context.Context, w io.Writer) error) {
+	s.Render(path, RenderFunc(renderer))
 }
 
 func (s *Site) Run(command string) {
